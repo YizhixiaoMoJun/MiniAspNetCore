@@ -1,4 +1,5 @@
 using System;
+using System.Security.Principal;
 
 namespace MiniAspNetCore
 {
@@ -16,5 +17,7 @@ namespace MiniAspNetCore
         public HttpResponse Response { get; set; }
 
         public IServiceProvider RequestServices { get; set; }
+
+        public IPrincipal User {get;set;}
     }
 }

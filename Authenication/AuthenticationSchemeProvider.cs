@@ -77,17 +77,17 @@ namespace MiniAspNetCore.Authenication
             => Task.FromResult(_schemesCopy);
 
         public virtual Task<AuthenticationScheme> GetDefaultAuthenticateSchemeAsync()
-            => _options.DefaultAuthenticateScheme!=null
-            ?GetSchemeAsync(_options.DefaultAuthenticateScheme)
-            :GetDefaultSchemeAsync();
+            => _options.DefaultAuthenticateScheme != null
+            ? GetSchemeAsync(_options.DefaultAuthenticateScheme)
+            : GetDefaultSchemeAsync();
 
         public virtual Task<AuthenticationScheme> GetDefaultChallengeSchemeAsync()
-            => _options.DefaultChallengeScheme!=null
-            ?GetSchemeAsync(_options.DefaultChallengeScheme)
-            :GetDefaultSchemeAsync();
+            => _options.DefaultChallengeScheme != null
+            ? GetSchemeAsync(_options.DefaultChallengeScheme)
+            : GetDefaultSchemeAsync();
 
         public virtual Task<AuthenticationScheme> GetDefaultForbidSchemeAsync()
-            =>_options.DefaultForbidScheme!=null
+            => _options.DefaultForbidScheme != null
             ? GetSchemeAsync(_options.DefaultForbidScheme)
             : GetDefaultChallengeSchemeAsync();
 
