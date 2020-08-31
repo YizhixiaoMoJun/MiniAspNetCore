@@ -5,7 +5,7 @@ namespace MiniAspNetCore.Authenication
 {
     public interface IAuthenticationService
     {
-        Task<AuthenticateResult> AuthenicateAsync(HttpContext context,string scheme);
+        Task<AuthenticateResult> AuthenticateAsync(HttpContext context,string scheme);
 
         Task ChallengeAsync(HttpContext context,string scheme,AuthenticationProperties properties);
 

@@ -1,5 +1,6 @@
 using System;
 using System.Security.Principal;
+using System.Threading;
 
 namespace MiniAspNetCore
 {
@@ -19,5 +20,7 @@ namespace MiniAspNetCore
         public IServiceProvider RequestServices { get; set; }
 
         public IPrincipal User {get;set;}
+
+        public CancellationToken RequestAborted { get; set; }
     }
 }

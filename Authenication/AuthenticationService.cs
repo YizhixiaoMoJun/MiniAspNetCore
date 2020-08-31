@@ -27,7 +27,7 @@ namespace MiniAspNetCore.Authenication
 
         public AuthenticationOptions Options { get; }
 
-        public virtual async Task<AuthenticateResult> AuthenicateAsync(HttpContext context, string scheme)
+        public virtual async Task<AuthenticateResult> AuthenticateAsync(HttpContext context, string scheme)
         {
             if (scheme == null)
             {

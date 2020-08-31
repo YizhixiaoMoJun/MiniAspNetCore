@@ -81,5 +81,10 @@ namespace MiniAspNetCore.Authenication
         /// will be used as the target scheme to forward to.
         /// </summary>
         public Func<HttpContext, string> ForwardDefaultSelector { get; set; }
+        /// <summary>
+        /// The HttpMessageHandler used to retrieve metadata.
+        /// This cannot be set at the same time as BackchannelCertificateValidator unless the value
+        /// is a WebRequestHandler.
+        /// </summary
     }
 }
