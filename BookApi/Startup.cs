@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using BookApi.Model;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace BookApi
 {
@@ -45,6 +48,34 @@ namespace BookApi
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Const.SecurityKey))
                     };
                 });
+            services.AddSwaggerGen(c=>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+                var securityRequirement = new OpenApiSecurityRequirement();
+                var securityScheme = new OpenApiSecurityScheme{
+                    Scheme = JwtBearerDefaults.AuthenticationScheme.ToLower(),
+                    Type = SecuritySchemeType.ApiKey,
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                securityRequirement.Add(securityScheme, new[] {
+                    JwtBearerDefaults.AuthenticationScheme});
+                c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme,securityScheme);
+                c.AddSecurityRequirement(securityRequirement);
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo()
+                    {
+                        Version = "v1",
+                        Title = "BookApi Title",
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +87,13 @@ namespace BookApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json","Book Api V1");
+            });
 
             app.UseRouting();
 

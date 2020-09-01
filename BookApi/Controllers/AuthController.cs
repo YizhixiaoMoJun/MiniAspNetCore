@@ -12,12 +12,21 @@ using Serilog;
 
 namespace BookApi.Controllers
 {
+    /// <summary>
+    /// Authentication controller
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        [HttpGet]
-        public BaseResponse Login(string userName,string pwd)
+        /// <summary>
+        /// Login method controller
+        /// </summary>
+        /// <param name="userName">shirley</param>
+        /// <param name="pwd">password</param>
+        /// <returns></returns>
+        [HttpGet("Login/{userName}/{pwd}")]
+        public IActionResult Login(string userName, string pwd)
         {
             var userInfo = new UserInfo
             {
@@ -27,7 +36,7 @@ namespace BookApi.Controllers
             if (string.IsNullOrEmpty(userInfo.UserName) || string.IsNullOrEmpty(userInfo.Pwd))
             {
                 Log.Information("UserName or Password is incorrect");
-                return new BaseResponse { Message = "UserName or Password is incorrect", Result = false };        
+                return BadRequest(new BaseResponse { Message = "UserName or Password is incorrect", Result = false });
             }
 
             var claims = new[]
@@ -44,11 +53,25 @@ namespace BookApi.Controllers
                 audience: Const.Domain,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
-            return new BaseResponse
+            return Ok(new BaseResponse
             {
                 Result = true,
                 Data = new JwtSecurityTokenHandler().WriteToken(token)
-            };
+            });
         }
+
+
+        [HttpPost("LoginPost")]
+        public IActionResult LoginPost(string userName, string pwd)
+        {
+            return Ok();
+        }
+
+        [HttpPost("LoginPost2")]
+        public IActionResult LoginPost2(UserInfo userInfo)
+        {
+            return Ok();
+        }
+
     }
 }

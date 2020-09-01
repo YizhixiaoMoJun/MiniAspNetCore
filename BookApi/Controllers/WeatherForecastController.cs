@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace BookApi.Controllers
 {
+    /// <summary>
+    /// weatherForecast controller
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
