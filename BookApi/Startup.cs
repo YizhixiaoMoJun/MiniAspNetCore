@@ -55,7 +55,7 @@ namespace BookApi
                 c.IncludeXmlComments(xmlPath);
                 var securityRequirement = new OpenApiSecurityRequirement();
                 var securityScheme = new OpenApiSecurityScheme{
-                    Scheme = JwtBearerDefaults.AuthenticationScheme.ToLower(),
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
                     Type = SecuritySchemeType.ApiKey,
                     In = ParameterLocation.Header,
                     Name = "Authorization",
