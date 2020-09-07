@@ -7,6 +7,8 @@ namespace BookApi.Model
 {
     public class UserInfo
     {
+
+        public int Id { get; set; }
         /// <summary>
         /// UserName
         /// </summary>
